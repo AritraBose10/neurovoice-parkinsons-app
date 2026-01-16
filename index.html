@@ -112,6 +112,19 @@
 
                 <p class="privacy-text">Your voice data is processed securely and encrypted</p>
             </main>
+
+            <!-- Analysis Loading Overlay -->
+            <div id="analysisLoading" class="analysis-loading-overlay" style="display: none;">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <h2 class="loading-title">Analyzing Your Voice...</h2>
+                    <p class="loading-subtitle" id="loadingStatus">Processing audio sample</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                    <p class="loading-note">This may take up to 30 seconds on first request</p>
+                </div>
+            </div>
         </section>
 
         <!-- Detailed Analysis Report Screen -->
