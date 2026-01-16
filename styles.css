@@ -341,6 +341,43 @@ body {
     font-variant-numeric: tabular-nums;
 }
 
+/* Sample Sentence Card */
+.sample-sentence-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-top: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.sample-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sample-text {
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    border-left: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.sample-note {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+    font-style: italic;
+    margin: 0;
+}
+
 .success-message {
     display: flex;
     align-items: center;
