@@ -183,6 +183,16 @@ async function uploadAndAnalyze(audioBlob) {
                 pitch_mean: 145.2,
                 pitch_std: 12.3
             },
+            clinical_concepts: {
+                'tremor': 0.15,
+                'breathiness': 0.22,
+                'monotone': 0.18,
+                'precision': 0.25,
+                'rate_variability': 0.12,
+                'harshness': 0.19,
+                'strain': 0.14
+            },
+            explanation: "Demo mode: Analysis shows low levels of vocal tremor (15%) and breathiness (22%), which are within normal ranges. Speech prosody appears healthy with minimal monotone characteristics (18%).",
             metrics: {
                 stability: 0.85,
                 variability: 1.2,
