@@ -324,16 +324,61 @@ function updateAnalyticsWithRealData() {
         return;
     }
 
-    const { risk_score, confidence, features } = latestAnalysis;
+    const { risk_score, confidence, features, clinical_concepts, explanation } = latestAnalysis;
 
     // Update Risk Assessment
     updateRiskAssessment(risk_score, confidence);
+
+    // Update Clinical Analysis (CBM)
+    updateClinicalAnalysis(clinical_concepts, explanation);
 
     // Update Biomarkers
     updateBiomarkers(features);
 
     // Update Interpretation
     updateInterpretation(risk_score, features);
+}
+
+function updateClinicalAnalysis(concepts, explanation) {
+    const cbmCard = document.getElementById('cbmAnalysis');
+    const conceptGrid = document.getElementById('conceptGrid');
+    const explanationText = document.getElementById('aiExplanationText');
+
+    if (!concepts) {
+        cbmCard.style.display = 'none';
+        return;
+    }
+
+    cbmCard.style.display = 'block';
+    conceptGrid.innerHTML = ''; // Clear previous
+
+    // Create progress bars for each concept
+    Object.entries(concepts).forEach(([name, score]) => {
+        // Determine color class
+        let colorClass = 'low';
+        if (score > 0.6) colorClass = 'high';
+        else if (score > 0.3) colorClass = 'medium';
+
+        const html = `
+            <div class="concept-item">
+                <div class="concept-header">
+                    <span class="concept-name">${name.replace(/_/g, ' ')}</span>
+                    <span class="concept-value">${(score * 100).toFixed(0)}%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill ${colorClass}" style="width: ${score * 100}%"></div>
+                </div>
+            </div>
+        `;
+        conceptGrid.innerHTML += html;
+    });
+
+    // Update explanation
+    if (explanation) {
+        explanationText.textContent = explanation;
+    } else {
+        explanationText.textContent = "No explanation available.";
+    }
 }
 
 function updateRiskAssessment(riskScore, confidence) {
