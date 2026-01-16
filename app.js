@@ -206,6 +206,13 @@ function hideAnalysisLoading() {
 // ===========================
 function initializeChart() {
     const canvas = document.getElementById('voiceChart');
+
+    // Safety check: skip if canvas doesn't exist
+    if (!canvas) {
+        console.warn('⚠️ Voice chart canvas not found, skipping chart');
+        return;
+    }
+
     const ctx = canvas.getContext('2d');
 
     // Set canvas size
