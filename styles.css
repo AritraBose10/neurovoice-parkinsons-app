@@ -1,0 +1,558 @@
+/* ===========================
+   CSS Variables - Design System
+   =========================== */
+:root {
+    /* Colors - Clinical Palette */
+    --color-bg-primary: #FFFFFF;
+    --color-bg-surface: #F8F9FA;
+    --color-text-primary: #1A1A1A;
+    --color-text-secondary: #6B7280;
+    --color-text-tertiary: #9CA3AF;
+    --color-accent-blue: #6B9BD1;
+    --color-accent-blue-hover: #5A8BC0;
+    --color-border: #E5E7EB;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+    --color-low-risk: #10B981;
+    --color-moderate-risk: #F59E0B;
+    --color-high-risk: #EF4444;
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 24px;
+    --font-size-2xl: 32px;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+
+    /* Transitions */
+    --transition-base: all 0.2s ease;
+}
+
+/* ===========================
+   Base Styles
+   =========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-surface);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===========================
+   App Container
+   =========================== */
+.app-container {
+    max-width: 428px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: var(--color-bg-primary);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+}
+
+/* ===========================
+   Screen Management
+   =========================== */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: var(--spacing-lg);
+    animation: fadeIn 0.3s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================
+   Dashboard Screen
+   =========================== */
+.app-header {
+    text-align: center;
+    padding: var(--spacing-2xl) 0 var(--spacing-xl);
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.brain-icon {
+    color: var(--color-accent-blue);
+    margin-bottom: var(--spacing-xs);
+}
+
+.app-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.5px;
+}
+
+.app-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-normal);
+    margin-top: var(--spacing-xs);
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.action-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.action-card {
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.action-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-accent-blue);
+}
+
+.action-card:active {
+    transform: translateY(0);
+}
+
+.card-icon {
+    color: var(--color-accent-blue);
+}
+
+.card-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    line-height: 1.4;
+}
+
+.status-text {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    margin-top: var(--spacing-lg);
+}
+
+/* ===========================
+   Screen Header (Upload & Analytics)
+   =========================== */
+.screen-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.back-button {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+    border-radius: var(--radius-sm);
+}
+
+.back-button:hover {
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-primary);
+}
+
+.screen-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    flex: 1;
+}
+
+/* ===========================
+   Upload Screen
+   =========================== */
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+}
+
+.instruction-text {
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.recording-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-2xl) 0;
+}
+
+.primary-button {
+    background-color: var(--color-accent-blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-md);
+    min-width: 220px;
+    justify-content: center;
+}
+
+.primary-button:hover {
+    background-color: var(--color-accent-blue-hover);
+    box-shadow: var(--shadow-lg);
+}
+
+.primary-button:active {
+    transform: scale(0.98);
+}
+
+.primary-button.recording {
+    background-color: #EF4444;
+}
+
+.primary-button.recording:hover {
+    background-color: #DC2626;
+}
+
+.button-icon {
+    stroke: currentColor;
+}
+
+.recording-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+}
+
+.recording-indicator.hidden {
+    display: none;
+}
+
+.recording-pulse {
+    width: 12px;
+    height: 12px;
+    background-color: #EF4444;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+}
+
+#recordingTimer {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.success-message {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: var(--radius-md);
+    color: var(--color-success);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.success-message.hidden {
+    display: none;
+}
+
+.privacy-text {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    line-height: 1.6;
+    margin-top: auto;
+    padding-top: var(--spacing-2xl);
+}
+
+/* ===========================
+   Detailed Analysis Report Screen
+   =========================== */
+.report-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-2xl);
+}
+
+.section-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Risk Assessment Card */
+.risk-assessment-card {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.risk-indicator {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.risk-level,
+.risk-score,
+.confidence-level {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+}
+
+.risk-label,
+.score-label,
+.confidence-label {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.risk-value,
+.score-value,
+.confidence-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.risk-value.low {
+    color: var(--color-low-risk);
+}
+
+.risk-value.moderate {
+    color: var(--color-moderate-risk);
+}
+
+.risk-value.high {
+    color: var(--color-high-risk);
+}
+
+/* Biomarkers Card */
+.biomarkers-card {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.biomarker-item {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.biomarker-item:last-child {
+    border-bottom: none;
+}
+
+.biomarker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.biomarker-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.biomarker-value {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-blue);
+}
+
+.biomarker-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-xs);
+}
+
+.biomarker-status {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+.biomarker-status.normal {
+    background-color: #ECFDF5;
+    color: var(--color-low-risk);
+}
+
+.biomarker-status.elevated {
+    background-color: #FEF3C7;
+    color: var(--color-moderate-risk);
+}
+
+.biomarker-status.high {
+    background-color: #FEE2E2;
+    color: var(--color-high-risk);
+}
+
+/* Interpretation Card */
+.interpretation-card {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.interpretation-content {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+.interpretation-content p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.interpretation-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Disclaimer Card */
+.disclaimer-card {
+    background-color: #FEF3C7;
+    border: 1px solid #F59E0B;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.disclaimer-title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.disclaimer-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+/* ===========================
+   Responsive Design
+   =========================== */
+@media (max-width: 375px) {
+    .action-cards {
+        grid-template-columns: 1fr;
+    }
+}

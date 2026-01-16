@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="NeuroVoice - Clinical-grade AI-powered voice analysis for early neurological risk monitoring">
+    <meta name="keywords" content="voice analysis, neurological monitoring, health tech, clinical app">
+    <title>NeuroVoice - Weekly Voice Monitoring</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Dashboard Screen -->
+        <section id="dashboard" class="screen active">
+            <header class="app-header">
+                <div class="logo-container">
+                    <svg class="brain-icon" width="40" height="40" viewBox="0 0 40 40" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M20 5C15 5 11 9 11 14C11 15.5 11.5 16.8 12.2 18C10.5 18.5 9 19.8 8.5 21.5C8 23 8.5 24.8 9.5 26C8.5 27 8 28.5 8 30C8 33 10.5 35.5 13.5 35.5C14.5 35.5 15.5 35.2 16.2 34.8C17 35.5 18.5 36 20 36C21.5 36 23 35.5 23.8 34.8C24.5 35.2 25.5 35.5 26.5 35.5C29.5 35.5 32 33 32 30C32 28.5 31.5 27 30.5 26C31.5 24.8 32 23 31.5 21.5C31 19.8 29.5 18.5 27.8 18C28.5 16.8 29 15.5 29 14C29 9 25 5 20 5Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M20 14V24M16 18H24M16 22H24" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" />
+                    </svg>
+                    <h1 class="app-title">NeuroVoice</h1>
+                </div>
+                <p class="app-subtitle">Weekly voice monitoring</p>
+            </header>
+
+            <main class="dashboard-content">
+                <div class="action-cards">
+                    <button class="action-card" onclick="navigateTo('upload')">
+                        <svg class="card-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16 4C12.5 4 9.5 6.5 9.5 9.5V16.5C9.5 19.5 12.5 22 16 22C19.5 22 22.5 19.5 22.5 16.5V9.5C22.5 6.5 19.5 4 16 4Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M6 15C6 20.5 10.5 25 16 25C21.5 25 26 20.5 26 15M16 25V28M12 28H20"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <h2 class="card-title">Upload Voice Sample</h2>
+                    </button>
+
+                    <button class="action-card" onclick="navigateTo('analytics')">
+                        <svg class="card-icon" width="32" height="32" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 26H28M6 22V26M11 18V26M16 14V26M21 10V26M26 6V26" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <h2 class="card-title">View Voice Analytics</h2>
+                    </button>
+                </div>
+
+                <p class="status-text" id="lastUploadStatus">Last sample uploaded: 3 days ago</p>
+            </main>
+        </section>
+
+        <!-- Upload Voice Sample Screen -->
+        <section id="upload" class="screen">
+            <header class="screen-header">
+                <button class="back-button" onclick="navigateTo('dashboard')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <h1 class="screen-title">Upload Weekly Voice Sample</h1>
+            </header>
+
+            <main class="upload-content">
+                <p class="instruction-text">Record a 15-second voice sample for analysis</p>
+
+                <div class="recording-area">
+                    <button id="recordButton" class="primary-button" onclick="toggleRecording()">
+                        <svg class="button-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 3C10.3 3 9 4.3 9 6V12C9 13.7 10.3 15 12 15C13.7 15 15 13.7 15 12V6C15 4.3 13.7 3 12 3Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M6 11C6 14.3 8.7 17 12 17C15.3 17 18 14.3 18 11M12 17V20M9 20H15"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span id="recordButtonText">Record Voice Sample</span>
+                    </button>
+
+                    <div id="recordingIndicator" class="recording-indicator hidden">
+                        <div class="recording-pulse"></div>
+                        <span id="recordingTimer">00:00</span>
+                    </div>
+
+                    <div id="successMessage" class="success-message hidden">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 6L9 17L4 12" stroke="#10B981" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span>Voice sample uploaded successfully</span>
+                    </div>
+                </div>
+
+                <p class="privacy-text">Your voice data is processed securely and encrypted</p>
+            </main>
+        </section>
+
+        <!-- Detailed Analysis Report Screen -->
+        <section id="analytics" class="screen">
+            <header class="screen-header">
+                <button class="back-button" onclick="navigateTo('dashboard')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <h1 class="screen-title">Analysis Report</h1>
+            </header>
+
+            <main class="report-content">
+                <!-- Risk Assessment Section -->
+                <div class="risk-assessment-card">
+                    <h2 class="section-title">Risk Assessment</h2>
+                    <div class="risk-indicator" id="riskIndicator">
+                        <div class="risk-level" id="riskLevel">
+                            <span class="risk-label">Risk Level:</span>
+                            <span class="risk-value" id="riskValue">Analyzing...</span>
+                        </div>
+                        <div class="risk-score">
+                            <span class="score-label">Detection Score:</span>
+                            <span class="score-value" id="scoreValue">--</span>
+                        </div>
+                        <div class="confidence-level">
+                            <span class="confidence-label">Confidence:</span>
+                            <span class="confidence-value" id="confidenceValue">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biomarker Analysis Section -->
+                <div class="biomarkers-card">
+                    <h2 class="section-title">Voice Biomarker Analysis</h2>
+
+                    <div class="biomarker-item">
+                        <div class="biomarker-header">
+                            <h3 class="biomarker-name">Jitter (Frequency Variation)</h3>
+                            <span class="biomarker-value" id="jitterValue">--</span>
+                        </div>
+                        <p class="biomarker-description">Measures vocal fold instability. Higher values may indicate
+                            motor control issues.</p>
+                        <div class="biomarker-status" id="jitterStatus"></div>
+                    </div>
+
+                    <div class="biomarker-item">
+                        <div class="biomarker-header">
+                            <h3 class="biomarker-name">Shimmer (Amplitude Variation)</h3>
+                            <span class="biomarker-value" id="shimmerValue">--</span>
+                        </div>
+                        <p class="biomarker-description">Measures vocal fold weakness. Elevated levels may suggest
+                            reduced voice control.</p>
+                        <div class="biomarker-status" id="shimmerStatus"></div>
+                    </div>
+
+                    <div class="biomarker-item">
+                        <div class="biomarker-header">
+                            <h3 class="biomarker-name">HNR (Voice Quality)</h3>
+                            <span class="biomarker-value" id="hnrValue">--</span>
+                        </div>
+                        <p class="biomarker-description">Harmonics-to-Noise Ratio. Lower values indicate breathier, less
+                            clear voice quality.</p>
+                        <div class="biomarker-status" id="hnrStatus"></div>
+                    </div>
+
+                    <div class="biomarker-item">
+                        <div class="biomarker-header">
+                            <h3 class="biomarker-name">Pitch Variability</h3>
+                            <span class="biomarker-value" id="pitchValue">--</span>
+                        </div>
+                        <p class="biomarker-description">Standard deviation of fundamental frequency. Reduced
+                            variability may indicate monotone speech.</p>
+                        <div class="biomarker-status" id="pitchStatus"></div>
+                    </div>
+
+                    <div class="biomarker-item">
+                        <div class="biomarker-header">
+                            <h3 class="biomarker-name">RPDE (Voice Complexity)</h3>
+                            <span class="biomarker-value" id="rpdeValue">--</span>
+                        </div>
+                        <p class="biomarker-description">Recurrence Period Density Entropy. Higher values may indicate
+                            irregular vocal patterns.</p>
+                        <div class="biomarker-status" id="rpdeStatus"></div>
+                    </div>
+                </div>
+
+                <!-- Interpretation Guide -->
+                <div class="interpretation-card">
+                    <h2 class="section-title">Understanding Your Results</h2>
+                    <div class="interpretation-content" id="interpretationContent">
+                        <p>Analysis results will appear here after recording a voice sample.</p>
+                    </div>
+                </div>
+
+                <!-- Medical Disclaimer -->
+                <div class="disclaimer-card">
+                    <h3 class="disclaimer-title">⚠️ Important Medical Disclaimer</h3>
+                    <p class="disclaimer-text">
+                        This analysis is for <strong>informational and research purposes only</strong>.
+                        It is NOT a medical diagnosis and should not be used as a substitute for professional medical
+                        advice,
+                        diagnosis, or treatment. If you have concerns about Parkinson's disease or any neurological
+                        condition,
+                        please consult a qualified healthcare provider or neurologist.
+                    </p>
+                </div>
+            </main>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
