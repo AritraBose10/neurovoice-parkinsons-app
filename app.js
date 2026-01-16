@@ -340,15 +340,26 @@ function updateAnalyticsWithRealData() {
 }
 
 function updateClinicalAnalysis(concepts, explanation) {
+    console.log('🔍 updateClinicalAnalysis called');
+    console.log('  Concepts:', concepts);
+    console.log('  Explanation:', explanation);
+
     const cbmCard = document.getElementById('cbmAnalysis');
     const conceptGrid = document.getElementById('conceptGrid');
     const explanationText = document.getElementById('aiExplanationText');
 
-    if (!concepts) {
+    if (!cbmCard) {
+        console.error('❌ cbmAnalysis element not found in DOM!');
+        return;
+    }
+
+    if (!concepts || Object.keys(concepts).length === 0) {
+        console.warn('⚠️ No concepts data, hiding card');
         cbmCard.style.display = 'none';
         return;
     }
 
+    console.log('✅ Showing CBM card with', Object.keys(concepts).length, 'concepts');
     cbmCard.style.display = 'block';
     conceptGrid.innerHTML = ''; // Clear previous
 
@@ -373,11 +384,14 @@ function updateClinicalAnalysis(concepts, explanation) {
         conceptGrid.innerHTML += html;
     });
 
+    console.log('📊 Generated', Object.keys(concepts).length, 'concept bars');
+
     // Update explanation
     if (explanation) {
         explanationText.textContent = explanation;
     } else {
         explanationText.textContent = "No explanation available.";
+
     }
 }
 
