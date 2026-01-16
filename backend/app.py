@@ -93,26 +93,37 @@ def heuristic_concept_mapping(legacy_features):
 @app.route('/api/analyze', methods=['POST'])
 def analyze_voice():
     try:
+        logger.info("Received analysis request")
         data = request.get_json()
         if not data or 'audio' not in data:
+            logger.error("No audio data in request")
             return jsonify({'error': 'No audio data provided'}), 400
         
+        logger.info("Decoding audio data...")
         # Decode audio
         audio_base64 = data['audio']
         if ',' in audio_base64:
             audio_base64 = audio_base64.split(',')[1]
         audio_bytes = base64.b64decode(audio_base64)
+        logger.info(f"Audio decoded, size: {len(audio_bytes)} bytes")
         
         # Save temp file
         with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
             temp_file.write(audio_bytes)
             temp_path = temp_file.name
+        logger.info(f"Audio saved to temp file: {temp_path}")
         
         try:
+            logger.info("Extracting features...")
             # 1. Pipeline: Legacy Feature Extraction (Fast & Reliable baseline)
             features = extract_features(temp_path)
+            logger.info(f"Features extracted: {list(features.keys())}")
+            
             features_array = features_to_array(features)
+            logger.info("Features converted to array")
+            
             legacy_pred = legacy_model.predict(features_array)
+            logger.info(f"Legacy prediction complete: risk={legacy_pred.get('risk_score')}")
             
             # 2. Pipeline: Advanced Analysis
             concepts = {}
@@ -127,7 +138,7 @@ def analyze_voice():
                     concepts = heuristic_concept_mapping(features)
                 else:
                     # Fallback: Use heuristic mapping on legacy features
-                    print("Using heuristic fallback for concepts...")
+                    logger.info("Using heuristic fallback for concepts...")
                     concepts = heuristic_concept_mapping(features)
                     
                 # Generate explanation
@@ -143,10 +154,12 @@ def analyze_voice():
                     
             except Exception as e:
                 logger.error(f"Error generating concepts: {e}")
+                traceback.print_exc()
                 # Ensure we send something so UI doesn't break
                 concepts = heuristic_concept_mapping(features)
                 explanation = "Clinical analysis available (Heuristic Mode)"
             
+            logger.info("Building response...")
             # Prepare Response
             response = {
                 'success': True,
@@ -165,11 +178,13 @@ def analyze_voice():
                 }
             }
             
+            logger.info("Response prepared successfully")
             return jsonify(response)
             
         finally:
             if os.path.exists(temp_path):
                 os.unlink(temp_path)
+                logger.info("Temp file cleaned up")
 
     except Exception as e:
         logger.error(f"Analysis error: {e}")
