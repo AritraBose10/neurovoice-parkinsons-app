@@ -118,7 +118,7 @@ function updateLastUploadStatus() {
 // ===========================
 // Backend API Integration
 // ===========================
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://neurovoice-parkinsons-app-1.onrender.com';
 let latestAnalysis = null;
 
 async function uploadAndAnalyze(audioBlob) {
