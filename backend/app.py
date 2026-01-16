@@ -106,27 +106,34 @@ def analyze_voice():
             concepts = {}
             explanation = ""
             
-            if advanced_models_active:
-                # In a real deployed training loop, we would:
-                # 1. Load audio with librosa
-                # 2. Run VAD
-                # 3. Extract DistilHuBERT embeddings
-                # 4. Run CBM forward pass
-                
-                # For this DEMO without trained CBM weights, we use the 
-                # heuristic mapping to show the UI capabilities
-                concepts = heuristic_concept_mapping(features)
-                
-                # Generate explanation based on these scores
+            # Use heuristic mapping as fallback if advanced models fail or are in demo mode
+            # This ensures the UI always shows the Clinical Analysis section
+            try:
+                if advanced_models_active:
+                    # In production: Use DistilHuBERT + CBM
+                    # For now, we use the same heuristic mapping as it's a robust demo
+                    concepts = heuristic_concept_mapping(features)
+                else:
+                    # Fallback: Use heuristic mapping on legacy features
+                    print("Using heuristic fallback for concepts...")
+                    concepts = heuristic_concept_mapping(features)
+                    
+                # Generate explanation
                 triggers = []
-                if concepts['tremor'] > 0.4: triggers.append('detectable vocal tremor')
-                if concepts['monotone'] > 0.5: triggers.append('reduced pitch variation (monotone)')
-                if concepts['breathiness'] > 0.4: triggers.append('breathy voice quality')
+                if concepts.get('tremor', 0) > 0.4: triggers.append('detectable vocal tremor')
+                if concepts.get('monotone', 0) > 0.5: triggers.append('reduced pitch variation (monotone)')
+                if concepts.get('breathiness', 0) > 0.4: triggers.append('breathy voice quality')
                 
                 if triggers:
                     explanation = f"Analysis detects {', '.join(triggers)}."
                 else:
                     explanation = "Voice characteristics appear stable with no significant clinical indicators."
+                    
+            except Exception as e:
+                logger.error(f"Error generating concepts: {e}")
+                # Ensure we send something so UI doesn't break
+                concepts = heuristic_concept_mapping(features)
+                explanation = "Clinical analysis available (Heuristic Mode)"
             
             # Prepare Response
             response = {
@@ -141,8 +148,8 @@ def analyze_voice():
                         'pitch_std': round(features.get('pitch_std', 0), 2),
                         'rpde': round(features.get('rpde', 0), 3)
                     },
-                    'clinical_concepts': concepts,  # NEW: For CBM display
-                    'explanation': explanation      # NEW: NLP explanation
+                    'clinical_concepts': concepts,
+                    'explanation': explanation
                 }
             }
             
